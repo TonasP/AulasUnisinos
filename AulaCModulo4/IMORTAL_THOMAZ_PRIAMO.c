@@ -109,7 +109,7 @@ void calcular_desvios(double valores[], int tamanho) {
 }
 
 int main() {
-	srand(time(NULL));
+	srand(time(NULL));//seed obrigatória para a geração de valores
 	//define o limite maximo do numero na função de gerar numeros aleatorios
 	int limiteMaxRand = 2000;
 	int quantLeituras;
