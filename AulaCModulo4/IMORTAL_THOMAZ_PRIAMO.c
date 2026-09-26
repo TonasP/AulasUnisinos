@@ -7,37 +7,53 @@ double sortearDouble(int max) {
 	return ((double) rand() / RAND_MAX) * max;
 }
 
+//(serve para todas as funções que tem esses parametros)
+// valores[] pega o valor gerado pela função de numero aleatório
+// tamanho pega o limite de valores definido pelo usuário no inicio do menu
 double calcular_media(double valores[], int tamanho) {
+	//inicia em 0.0 para não iniciar como lixo
 	double soma = 0.0;
 	for(int i = 0; i < tamanho; i++) {
+		//pega o antigo valor do soma e faz a adição com o valor atual do valores[i]
+		//definindo o valor de soma como o resultado da adição
 		soma = soma + valores[i];
 	}
 	return soma / tamanho;
 }
 
 double encontrar_maximo(double valores[], int tamanho) {
+	//inicia como o primeiro valor do valores[], evitando iniciar em 0
+	//para que o valor maximo nunca seja 2000 (limite definido pelo professor) por engano
 	double valorMax = valores[0];
+
 	for(int i = 1; i < tamanho; i++) {
 		if (valores[i] > valorMax) {
 			valorMax = valores[i];
+			//se o valor atual (valores[i]) for maior que o valor maximo definido
+			//substitui o valor maximo definido pelo atual (valores[i])
 		}
 	}
 	return valorMax;
 }
 
 double encontrar_minimo(double valores[], int tamanho) {
+	//inicia como o primeiro valor do valores[], evitando iniciar em 0
+	//para que o valor minimo nunca seja 0 por engano
 	double valorMin = valores[0];
 	for(int i = 1; i < tamanho; i++) {
 		if (valores[i] < valorMin) {
 			valorMin = valores[i];
+			//se o valor atual (valores[i]) for menor que o valor minimo definido
+			//substitui o valor minimo definido pelo atual (valores[i])
 		}
 	}
 	return valorMin;
 }
-
+// limiteMin e Max é definido pelo usuário quando ele seleciona a opção
 void verificar_faixa(double valores[], int tamanho, double limiteMin, double limiteMax) {
 	for (int i = 0; i < tamanho; i++) {
 		if (valores[i] > limiteMax) {
+			//o %d chama o valor no final do printf (i+1)
 			printf("Leitura %d: Acima do limite\n", i + 1);
 		}
 		else if (valores[i] < limiteMin) {
@@ -50,7 +66,11 @@ void verificar_faixa(double valores[], int tamanho, double limiteMin, double lim
 }
 
 void exibir_barra_grafica(double valores[], int tamanho) {
+	//chama a função de calcular média que foi criada no "inicio do código"
 	double valorMedia = calcular_media(valores, tamanho);
+	//define a quantidade de asteriscos
+	//como não é possível fazer, por exemplo, meio asterisco
+	//transforma o valor que era double em int, fazendo um 7.8 virar um 7 e assim segue
 	int qtdAsteriscos = (int)valorMedia;
 
 	if (qtdAsteriscos > 20) {
@@ -70,50 +90,61 @@ void exibir_barra_grafica(double valores[], int tamanho) {
 void exibir_relatorio_completo(double valores[], int tamanho) {
 	printf("Relatorio completo:\n");
 	for(int i = 0; i < tamanho; i++) {
+		//somente exibe todos os valores gerados em lista
 		printf("Leitura %d: %.2f\n", i + 1, valores[i]);
 	}
 }
 void calcular_desvios(double valores[], int tamanho) {
-
+	//chama a função de calcular média que foi criada no "inicio do código"
 	double media = calcular_media(valores, tamanho);
-
+	//mostra ao usuário a média para referencia
 	printf("Media de referencia: %.2f\n\n", media);
 
 	for(int i = 0; i < tamanho; i++) {
+		//pega os valores gerados e subtrái pela média calculada
 		double desvio = valores[i] - media;
+		//exibe o valor gerado / resultado da subtração
 		printf("Leitura %d: %.2f | Desvio: %.2f\n", i + 1, valores[i], desvio);
 	}
 }
 
 int main() {
 	srand(time(NULL));
+	//define o limite maximo do numero na função de gerar numeros aleatorios
 	int limiteMaxRand = 2000;
 	int quantLeituras;
 	double valores[100];
+	//define a variavel para verificar se o usuário quer gerar novos numeros
 	char novaSimulacao;
+	//define a variavel para verificar se o usuário quer realizar outra operação do menu
 	char continuarOperacao;
-
+	//inicia  o menu
 	do {
 		int leitMinMax = 0;
+		//define uma repetição caso o usuário insira um valor que não condiza com os limites min e max
 		while (leitMinMax == 0) {
 			printf("Insira quantos dados serao lidos (entre 3 e 100):\n");
 			scanf("%d", &quantLeituras);
 
 			if (quantLeituras < 3 || quantLeituras > 100) {
 				printf("A quantidade de leituras nao condiz com os requisitos minimos ou maximos\n");
+				//define a variavel leitMinMax(Leitura Min e Max) como 0, voltando para o inicio
 				leitMinMax = 0;
 			}
 			else {
+				//define a variavel leitMinMax(Leitura Min e Max) como 1, continuando o código
 				leitMinMax = 1;
 			}
 		}
-
+		//chama a função de gerar numeros aleatorios baseadas no limite definido lá em cima
 		for (int i = 0; i < quantLeituras; i++) {
 			valores[i] = sortearDouble(limiteMaxRand);
 		}
-
+		//define a função de continuar operação como s, para não fechar o menu
 		continuarOperacao = 's';
-		int opcao = -1;
+		//define a opção como -1 para não acabar selecionando uma opção sem querer, poderia ser qualquer valor "inexistente"
+		//as vezes, se for um valor existente no menu, ele pode selecionar instantaneamente ou não, não sei por que
+		int opcao =-1;
 
 		while (continuarOperacao == 's' || continuarOperacao == 'S') {
 			printf("\n=========================================================\n");
