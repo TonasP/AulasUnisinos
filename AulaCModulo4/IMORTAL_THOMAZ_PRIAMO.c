@@ -161,7 +161,8 @@ int main() {
 			printf("Escolha uma opcao: ");
 
 			scanf("%d", &opcao);
-
+			//valida o input do usuário, percorre o switch e cai no case selecionado pelo usuário
+            //nestes cases, as funções criadas e comentadas acima, junto dos parametros são chamados e preenchidos
 			switch (opcao) {
 			case 1:
 				printf("\n-> Executando: Calcular media...\n");
